@@ -14,10 +14,10 @@ function handleClick(name: string) {
 	<div class="text-2xl mt-10 font-500">
 		<div
 			v-for="(c, idx) in content"
-			:key="idx" class="my-6 hover:cursor-pointer"
+			:key="idx" class="my-7 hover:cursor-pointer flex flex-col"
 			@click="handleClick(c.name?.toString() ?? '')"
 		>
-			<span class="text-base font-700 mr-5 opacity-70">{{ c.meta?.time }}</span>
+			<span class="text-base font-700 mr-5 opacity-45">{{ c.meta?.time }}</span>
 			<span>{{ c.meta?.title }}</span>
 		</div>
 	</div>

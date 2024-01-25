@@ -69,7 +69,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       _push(`<div${ssrRenderAttrs(mergeProps({ class: "text-2xl mt-10 font-500" }, _attrs))}><!--[-->`);
       ssrRenderList(unref(content), (c, idx) => {
         var _a, _b;
-        _push(`<div class="my-6 hover:cursor-pointer"><span class="text-base font-700 mr-5 opacity-70">${ssrInterpolate((_a = c.meta) == null ? void 0 : _a.time)}</span><span>${ssrInterpolate((_b = c.meta) == null ? void 0 : _b.title)}</span></div>`);
+        _push(`<div class="my-7 hover:cursor-pointer flex flex-col"><span class="text-base font-700 mr-5 opacity-45">${ssrInterpolate((_a = c.meta) == null ? void 0 : _a.time)}</span><span>${ssrInterpolate((_b = c.meta) == null ? void 0 : _b.title)}</span></div>`);
       });
       _push(`<!--]--></div>`);
     };

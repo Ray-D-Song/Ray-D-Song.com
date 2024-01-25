@@ -9,7 +9,7 @@ const routes = [
   {
     path: "/",
     name: "/",
-    component: () => import("./assets/index-r3uaZB-f.js")
+    component: () => import("./assets/index-XmnDmYQc.js")
     /* no children */
   },
   {
