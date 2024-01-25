@@ -23,8 +23,12 @@
 }
 
 code {
+  white-space: unset !important;
 	counter-reset: step;
 	counter-increment: step 0;
+  word-break: break-all !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 code .line:not(:last-child)::before {
@@ -49,7 +53,10 @@ html.dark .shiki span {
 }
 
 .copy-container {
-	margin-top: -1rem;
+  width: 100%;
+  top: -1.5rem;
+  left: 0;
+  position: sticky;
 	margin-bottom: 0.5rem;
 	@apply flex justify-between items-center;
 }
