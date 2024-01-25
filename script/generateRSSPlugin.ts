@@ -62,7 +62,7 @@ async function setup() {
 						date: new Date(data.time),
 						content: html,
 						author: [author],
-						link: domain + i.replace(/^pages(.+)\.md$/, '$1'),
+						link: domain + '/' + i.replace(/^src\/page\//, '').replace(/\.md$/, '')
 					}
 				}),
 		))

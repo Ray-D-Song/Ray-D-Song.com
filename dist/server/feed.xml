@@ -4,7 +4,7 @@
         <title>Ray-D-Song</title>
         <link>https://ray-d-song.com/</link>
         <description>Ray's blog, Just for fun</description>
-        <lastBuildDate>Thu, 25 Jan 2024 18:18:26 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 25 Jan 2024 18:44:31 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -16,8 +16,8 @@
         <atom:link href="https://ray-d-song.com/rss.xml" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[Vue 使用 Vitest 进行单元测试]]></title>
-            <link>https://ray-d-song.comsrc/page/post/vitest-unit-test.md</link>
-            <guid>https://ray-d-song.comsrc/page/post/vitest-unit-test.md</guid>
+            <link>https://ray-d-song.com/post/vitest-unit-test</link>
+            <guid>https://ray-d-song.com/post/vitest-unit-test</guid>
             <pubDate>Mon, 18 Dec 2023 00:00:00 GMT</pubDate>
             <content:encoded><![CDATA[<h1>单元测试的定义</h1>
 <blockquote>
@@ -522,8 +522,8 @@ test('test mock Pick', () =&gt; {
         </item>
         <item>
             <title><![CDATA[cloudflare worker/D1 初探]]></title>
-            <link>https://ray-d-song.comsrc/page/post/cloudflare-d1.md</link>
-            <guid>https://ray-d-song.comsrc/page/post/cloudflare-d1.md</guid>
+            <link>https://ray-d-song.com/post/cloudflare-d1</link>
+            <guid>https://ray-d-song.com/post/cloudflare-d1</guid>
             <pubDate>Sat, 18 Nov 2023 00:00:00 GMT</pubDate>
             <content:encoded><![CDATA[<h1>创建项目</h1>
 <p>如果是第一次使用 worker 服务, 需要登录一下</p>
@@ -784,8 +784,8 @@ describe('Event Tracking', () =&gt; {
         </item>
         <item>
             <title><![CDATA[TailwindCSS 的价值]]></title>
-            <link>https://ray-d-song.comsrc/page/post/value-of-tailwind.md</link>
-            <guid>https://ray-d-song.comsrc/page/post/value-of-tailwind.md</guid>
+            <link>https://ray-d-song.com/post/value-of-tailwind</link>
+            <guid>https://ray-d-song.com/post/value-of-tailwind</guid>
             <pubDate>Wed, 11 Oct 2023 00:00:00 GMT</pubDate>
             <content:encoded><![CDATA[<p>tailwind 一直饱受非议, 其中说的最多的大概就是「我为什么不直接写内联样式?」.<br>
 其实 tailwind 不仅是简写了样式名这么简单, 它是一系列便利的封装.</p>
@@ -864,8 +864,8 @@ describe('Event Tracking', () =&gt; {
         </item>
         <item>
             <title><![CDATA[协程(Coroutine)和纤程(Fiber)]]></title>
-            <link>https://ray-d-song.comsrc/page/post/coroutine-and-fiber.md</link>
-            <guid>https://ray-d-song.comsrc/page/post/coroutine-and-fiber.md</guid>
+            <link>https://ray-d-song.com/post/coroutine-and-fiber</link>
+            <guid>https://ray-d-song.com/post/coroutine-and-fiber</guid>
             <pubDate>Tue, 12 Sep 2023 16:00:00 GMT</pubDate>
             <content:encoded><![CDATA[<p>最近在看 C++ 引入 Fiber 的<a href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4024.pdf">N4024文档: 区分纤程和协程</a>, 文章给纤程和协程十分明确的区分. 但过去我看过的很多资料会将其混为一谈或者模糊二者的边界, 所以写了这篇博客来总结一下.</p>
 <h1>纤程</h1>
@@ -1029,8 +1029,8 @@ Coroutine 作为发起者的「子程序」, 不存在独立的生命周期.</li
         </item>
         <item>
             <title><![CDATA[单线程并发]]></title>
-            <link>https://ray-d-song.comsrc/page/post/single-thread-concurrency.md</link>
-            <guid>https://ray-d-song.comsrc/page/post/single-thread-concurrency.md</guid>
+            <link>https://ray-d-song.com/post/single-thread-concurrency</link>
+            <guid>https://ray-d-song.com/post/single-thread-concurrency</guid>
             <pubDate>Wed, 16 Aug 2023 16:00:00 GMT</pubDate>
             <content:encoded><![CDATA[<blockquote>
 <p>本文封面和思路来源于 Ruby China 2021 By 东仙队长的分享: <a href="https://www.bilibili.com/video/BV1h3411v7kq/?spm_id_from=333.999.0.0&amp;vd_source=371668a779fa4a755fcbf62901a22d71">Ruby 高并发编程指北</a></p>
