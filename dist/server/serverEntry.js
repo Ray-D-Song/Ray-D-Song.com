@@ -134,7 +134,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     useRouter();
     const { toast, handleShowToast } = useToast("copy success");
     return (_ctx, _push, _parent, _attrs) => {
-      _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-full flex justify-center items-center flex-col" }, _attrs))}><div class="w-full backdrop-blur-xl fixed left-0 top-0 flex justify-between"><div class="i-mdi-dinosaur-pixel w-10 h-10 mx-2 my-1 hover:cursor-pointer hover:opacity-80"></div><div class="flex"><div class="i-grommet-icons:github w-6 h-6 m-2 hover:cursor-pointer hover:opacity-80"></div><div class="i-fluent:rss-24-filled w-6 h-6 m-2 hover:cursor-pointer hover:opacity-80"></div><div class="i-fluent:dark-theme-24-filled w-6 h-6 m-2 hover:cursor-pointer hover:opacity-80"></div></div></div><div class="w-9/10 lg:8/10 xl:7/10 prose mt-15">`);
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-full flex justify-center items-center flex-col" }, _attrs))}><div class="w-full backdrop-blur-xl fixed left-0 top-0 flex justify-between z-20"><div class="i-mdi-dinosaur-pixel w-10 h-10 mx-2 my-1 hover:cursor-pointer hover:opacity-80"></div><div class="flex"><div class="i-grommet-icons:github w-6 h-6 m-2 hover:cursor-pointer hover:opacity-80"></div><div class="i-fluent:rss-24-filled w-6 h-6 m-2 hover:cursor-pointer hover:opacity-80"></div><div class="i-fluent:dark-theme-24-filled w-6 h-6 m-2 hover:cursor-pointer hover:opacity-80"></div></div></div><div class="w-9/10 lg:8/10 xl:7/10 prose mt-15">`);
       ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
       _push(`</div>`);
       _push(ssrRenderComponent(unref(toast), null, null, _parent));

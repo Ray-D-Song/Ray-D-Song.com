@@ -32,7 +32,7 @@ function handleNav(key: number) {
 
 <template>
 	<div class="w-full flex justify-center items-center flex-col">
-		<div class="w-full backdrop-blur-xl fixed left-0 top-0 flex justify-between">
+		<div class="w-full backdrop-blur-xl fixed left-0 top-0 flex justify-between z-20">
 			<div
 				class="i-mdi-dinosaur-pixel w-10 h-10 mx-2 my-1 hover:cursor-pointer hover:opacity-80"
 				@click="handleNav(1)"

@@ -58,7 +58,7 @@ html.dark .shiki span {
   left: 0;
   position: sticky;
 	margin-bottom: 0.5rem;
-	@apply flex justify-between items-center;
+	@apply flex justify-between items-center z-10;
 }
 .copy-icon {
 	width: 1.4rem;
