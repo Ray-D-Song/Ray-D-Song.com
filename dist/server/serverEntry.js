@@ -80,7 +80,7 @@ const routes = [
       {
         path: "vue-compiler-macro-defineprops",
         name: "/post/vue-compiler-macro-defineprops",
-        component: () => import("./assets/vue-compiler-macro-defineprops-BIUwb9Pm.js"),
+        component: () => import("./assets/vue-compiler-macro-defineprops-V3jWOzYp.js"),
         /* no children */
         meta: {
           "title": "Vue 宏编译: 以 defineProps 为例",

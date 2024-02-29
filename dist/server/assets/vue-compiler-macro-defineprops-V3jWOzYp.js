@@ -264,13 +264,7 @@ const scriptSetupAst = parse(
 <span class="line"><span style="${ssrRenderStyle({ "color": "#286983", "--shiki-dark": "#F7768E", "font-weight": "inherit", "--shiki-dark-font-weight": "bold" })}">    ...</span></span>
 <span class="line"><span style="${ssrRenderStyle({ "color": "#797593", "--shiki-dark": "#9ABDF5" })}">  }</span></span>
 <span class="line"><span style="${ssrRenderStyle({ "color": "#797593", "--shiki-dark": "#9ABDF5" })}">}</span></span>
-<span class="line"></span></code></pre><p>到这里, 「向前看」的工作已经完成, 大体流程为</p><pre class="shiki shiki-themes rose-pine-dawn tokyo-night" style="${ssrRenderStyle({ "background-color": "#faf4ed", "--shiki-dark-bg": "#1a1b26", "color": "#575279", "--shiki-dark": "#a9b1d6" })}" tabindex="0"><div class="copy-container"><div class="lang-symbol">mermaid</div><img${ssrRenderAttr("src", _imports_0)} class="copy-icon" data-code="flowchart
-    A(script setup 内容) --&gt;|babel parse| B(scriptSetupAst)
-    B --&gt;|for...of|C(TSTypeLiteral AST)
-"></div><code><span class="line"><span style="${ssrRenderStyle({ "color": "#575279", "--shiki-dark": "#A9B1D6" })}">flowchart</span></span>
-<span class="line"><span style="${ssrRenderStyle({ "color": "#575279", "--shiki-dark": "#A9B1D6" })}">    A(script setup 内容) --&gt;|babel parse| B(scriptSetupAst)</span></span>
-<span class="line"><span style="${ssrRenderStyle({ "color": "#575279", "--shiki-dark": "#A9B1D6" })}">    B --&gt;|for...of|C(TSTypeLiteral AST)</span></span>
-<span class="line"></span></code></pre><h2>向后看: propsTypeDecl 有什么用, 怎么处理</h2><p>processDefineProps 的作用是对 propsTypeDecl 赋值, 那么赋值后对 propsTypeDecl 进行了哪些操作就是生成运行时 props 定义的关键.<br> 按照惯例, 首先打印 propsTypeDecl</p><pre class="shiki shiki-themes rose-pine-dawn tokyo-night" style="${ssrRenderStyle({ "background-color": "#faf4ed", "--shiki-dark-bg": "#1a1b26", "color": "#575279", "--shiki-dark": "#a9b1d6" })}" tabindex="0"><div class="copy-container"><div class="lang-symbol">typescript</div><img${ssrRenderAttr("src", _imports_0)} class="copy-icon" data-code="propsTypeDecl:  Node {
+<span class="line"></span></code></pre><p>到这里, 「向前看」的工作已经完成, 大体流程为 <img src="https://r2.ray-d-song.com/2024/02/2101e0b9f3936ba65773c8f9a77e3db2.png" alt="half"></p><h2>向后看: propsTypeDecl 有什么用, 怎么处理</h2><p>processDefineProps 的作用是对 propsTypeDecl 赋值, 那么赋值后对 propsTypeDecl 进行了哪些操作就是生成运行时 props 定义的关键.<br> 按照惯例, 首先打印 propsTypeDecl</p><pre class="shiki shiki-themes rose-pine-dawn tokyo-night" style="${ssrRenderStyle({ "background-color": "#faf4ed", "--shiki-dark-bg": "#1a1b26", "color": "#575279", "--shiki-dark": "#a9b1d6" })}" tabindex="0"><div class="copy-container"><div class="lang-symbol">typescript</div><img${ssrRenderAttr("src", _imports_0)} class="copy-icon" data-code="propsTypeDecl:  Node {
   type: &#39;TSTypeLiteral&#39;,
   start: 113,
   end: 729,
@@ -510,17 +504,7 @@ if (emitIdentifier) {
 <span class="line"><span style="${ssrRenderStyle({ "color": "#EA9D34", "--shiki-dark": "#9ECE6A" })}">    }</span><span style="${ssrRenderStyle({ "color": "#EA9D34", "--shiki-dark": "#89DDFF" })}">\`</span></span>
 <span class="line"><span style="${ssrRenderStyle({ "color": "#797593", "--shiki-dark": "#9ABDF5" })}">  }</span></span>
 <span class="line"><span style="${ssrRenderStyle({ "color": "#797593", "--shiki-dark": "#9ABDF5" })}">}</span></span>
-<span class="line"></span></code></pre><h2>总结</h2><p>到这里我们分析完了整个的流程, 如下:</p><pre class="shiki shiki-themes rose-pine-dawn tokyo-night" style="${ssrRenderStyle({ "background-color": "#faf4ed", "--shiki-dark-bg": "#1a1b26", "color": "#575279", "--shiki-dark": "#a9b1d6" })}" tabindex="0"><div class="copy-container"><div class="lang-symbol">mermaid</div><img${ssrRenderAttr("src", _imports_0)} class="copy-icon" data-code="flowchart
-    A(script setup 内容) --&gt;|babel parse| B(scriptSetupAst)
-    B --&gt;|for...of|C(TSTypeLiteral AST)
-    C --&gt;|extractRuntimeProps|D(runtime Props)
-    C --&gt;|&quot;finalize setup() argument signature&quot;|E(defineComponent: __props)
-"></div><code><span class="line"><span style="${ssrRenderStyle({ "color": "#575279", "--shiki-dark": "#A9B1D6" })}">flowchart</span></span>
-<span class="line"><span style="${ssrRenderStyle({ "color": "#575279", "--shiki-dark": "#A9B1D6" })}">    A(script setup 内容) --&gt;|babel parse| B(scriptSetupAst)</span></span>
-<span class="line"><span style="${ssrRenderStyle({ "color": "#575279", "--shiki-dark": "#A9B1D6" })}">    B --&gt;|for...of|C(TSTypeLiteral AST)</span></span>
-<span class="line"><span style="${ssrRenderStyle({ "color": "#575279", "--shiki-dark": "#A9B1D6" })}">    C --&gt;|extractRuntimeProps|D(runtime Props)</span></span>
-<span class="line"><span style="${ssrRenderStyle({ "color": "#575279", "--shiki-dark": "#A9B1D6" })}">    C --&gt;|&quot;finalize setup() argument signature&quot;|E(defineComponent: __props)</span></span>
-<span class="line"></span></code></pre></div>`);
+<span class="line"></span></code></pre><h2>总结</h2><p>到这里我们分析完了整个的流程, 如下: <img src="https://r2.ray-d-song.com/2024/02/4feb8aaf8c3cda71a6383100a72cb3e2.png" alt="full flow"></p></div>`);
     };
   }
 };

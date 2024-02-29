@@ -176,11 +176,7 @@ function parse(
 }
 ```
 到这里, 「向前看」的工作已经完成, 大体流程为
-```mermaid
-flowchart
-    A(script setup 内容) -->|babel parse| B(scriptSetupAst)
-    B -->|for...of|C(TSTypeLiteral AST)
-```
+![half](https://r2.ray-d-song.com/2024/02/2101e0b9f3936ba65773c8f9a77e3db2.png)
 
 ## 向后看: propsTypeDecl 有什么用, 怎么处理
 processDefineProps 的作用是对 propsTypeDecl 赋值, 那么赋值后对 propsTypeDecl 进行了哪些操作就是生成运行时 props 定义的关键.   
@@ -335,10 +331,4 @@ if (emitIdentifier) {
 
 ## 总结
 到这里我们分析完了整个的流程, 如下:
-```mermaid
-flowchart
-    A(script setup 内容) -->|babel parse| B(scriptSetupAst)
-    B -->|for...of|C(TSTypeLiteral AST)
-    C -->|extractRuntimeProps|D(runtime Props)
-    C -->|"finalize setup() argument signature"|E(defineComponent: __props)
-```
+![full flow](https://r2.ray-d-song.com/2024/02/4feb8aaf8c3cda71a6383100a72cb3e2.png)

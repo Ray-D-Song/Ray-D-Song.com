@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ray-d-song.com/</id>
     <title>Ray-D-Song</title>
-    <updated>2024-02-29T09:02:30.590Z</updated>
+    <updated>2024-02-29T09:06:00.371Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>Ray-D-Song</name>
@@ -179,11 +179,8 @@ parse 函数调用了_parse 函数, 而 _parse 函数是<code>@babel/parser</cod
   }
 }
 </code></pre>
-<p>到这里, 「向前看」的工作已经完成, 大体流程为</p>
-<pre><code class="language-mermaid">flowchart
-    A(script setup 内容) --&gt;|babel parse| B(scriptSetupAst)
-    B --&gt;|for...of|C(TSTypeLiteral AST)
-</code></pre>
+<p>到这里, 「向前看」的工作已经完成, 大体流程为<br>
+<img src="https://r2.ray-d-song.com/2024/02/2101e0b9f3936ba65773c8f9a77e3db2.png" alt="half"></p>
 <h2>向后看: propsTypeDecl 有什么用, 怎么处理</h2>
 <p>processDefineProps 的作用是对 propsTypeDecl 赋值, 那么赋值后对 propsTypeDecl 进行了哪些操作就是生成运行时 props 定义的关键.<br>
 按照惯例, 首先打印 propsTypeDecl</p>
@@ -328,13 +325,8 @@ if (emitIdentifier) {
 }
 </code></pre>
 <h2>总结</h2>
-<p>到这里我们分析完了整个的流程, 如下:</p>
-<pre><code class="language-mermaid">flowchart
-    A(script setup 内容) --&gt;|babel parse| B(scriptSetupAst)
-    B --&gt;|for...of|C(TSTypeLiteral AST)
-    C --&gt;|extractRuntimeProps|D(runtime Props)
-    C --&gt;|&quot;finalize setup() argument signature&quot;|E(defineComponent: __props)
-</code></pre>
+<p>到这里我们分析完了整个的流程, 如下:<br>
+<img src="https://r2.ray-d-song.com/2024/02/4feb8aaf8c3cda71a6383100a72cb3e2.png" alt="full flow"></p>
 ]]></content>
         <author>
             <name>Ray-D-Song</name>
