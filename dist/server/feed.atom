@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ray-d-song.com/</id>
     <title>Ray-D-Song</title>
-    <updated>2024-01-28T12:36:53.308Z</updated>
+    <updated>2024-02-29T09:01:18.136Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>Ray-D-Song</name>
@@ -15,6 +15,333 @@
     <logo>https://ray-d-song.com/avatar.jpeg</logo>
     <icon>https://ray-d-song.com/dino.svg</icon>
     <rights>CC BY-NC-SA 4.0 2024 © Ray-D-Song</rights>
+    <entry>
+        <title type="html"><![CDATA[Vue 宏编译: 以 defineProps 为例]]></title>
+        <id>https://ray-d-song.com/post/vue-compiler-macro-defineprops</id>
+        <link href="https://ray-d-song.com/post/vue-compiler-macro-defineprops"/>
+        <updated>2024-02-28T16:00:00.000Z</updated>
+        <content type="html"><![CDATA[<p>Vue macro(宏) 随着<code>&lt;script setup&gt;</code>写法一同引入 Vue 生态, 进一步丰富了 Vue 在编译期的想象力.<br>
+本文主要分析 Vue defineProps 的 type-only 写法是如何根据类型信息生成运行时代码.</p>
+<p>我们先拉取 Vue 的源代码, 并切换到3.0.3版本, 这是最早引入 script setup 和 defineProps macro 的版本.</p>
+<p>Vue 的 script setup 编译器源码位于<code>packages/compiler-sfc/src/compileScript.ts</code>, 接下来所有的代码都出自这个文件</p>
+<p>为了方便查看运行结果和打印, 在根目录下的<code>package.json</code>新增<code>test-compiler</code>命令, 这条命令表示只运行<code>packages/compiler-sfc</code>文件夹下的<code>with TypeScript</code>测试.</p>
+<pre><code class="language-json">&quot;scripts&quot;: {
+  &quot;test-compiler&quot;: &quot;jest packages/compiler-sfc --testPathPattern='packages/compiler-sfc' --testNamePattern='with TypeScript' &quot;,
+  },
+</code></pre>
+<p>先看 defineProps&lt;{}&gt;() 会被编译成什么<br>
+在<code>packages/compiler-sfc/__tests__/compileScript.spec.ts</code>文件的451 行打个<code>console.log(content)</code>, 查看编译完成的内容<br>
+输入:</p>
+<pre><code class="language-vue">import { defineProps } from 'vue'
+
+
+defineProps&lt;{
+  string: string
+  number: number
+  boolean: boolean
+  object: object
+  // ...
+}&gt;()
+</code></pre>
+<p>输出:</p>
+<pre><code class="language-typescript">import { defineComponent as _defineComponent } from 'vue'
+
+
+export default _defineComponent({
+  expose: [],
+  props: {
+    string: { type: String, required: true },
+    number: { type: Number, required: true },
+    boolean: { type: Boolean, required: true },
+    object: { type: Object, required: true },
+    // ...
+  } as unknown as undefined,
+  setup(__props: {
+        string: string
+        number: number
+        boolean: boolean
+        object: object
+        // ...
+      }) {
+
+return {  }
+}
+
+})
+</code></pre>
+<p>可以看到 defineProps 被编译为<code>defineComponent</code>方法中的 options props 写法, 同时还定义了 defineComponent 方法中的 setup 函数选项并保留了类型的定义.</p>
+<h2>定位</h2>
+<p>在<code>packages/compiler-sfc/src/compileScript.ts</code>文件中, 我们一眼能找到一个看起来是处理 props 的方法:</p>
+<pre><code class="language-typescript">function processDefineProps(node: Node): boolean {
+  if (isCallOf(node, DEFINE_PROPS)) {
+    hasDefinePropsCall = true
+    // context call has type parameters - infer runtime types from it
+    if (node.typeParameters) {
+      const typeArg = node.typeParameters.params[0]
+      if (typeArg.type === 'TSTypeLiteral') {
+        propsTypeDecl = typeArg
+      }
+    }
+    return true
+  }
+  return false
+}
+</code></pre>
+<p>这个函数接受参数<code>node</code>, 并将propsTypeDecl赋值为 node.typeParameters.params[0]<br>
+接下来我们按照看源码的惯例: 向前找入参 node, 向后找 propsTypeDecl 的作用.</p>
+<h2>向前看: node 是什么, 从哪来</h2>
+<p>我们在 processDefineProps 方法中打印一下 node:</p>
+<pre><code class="language-typescript">Node {
+  type: 'CallExpression',
+  start: 101,
+  end: 732,
+  loc: SourceLocation {
+    start: Position { line: 7, column: 6 },
+    end: Position { line: 30, column: 10 },
+    filename: undefined,
+    identifierName: undefined
+  },
+  range: undefined,
+  leadingComments: undefined,
+  trailingComments: undefined,
+  innerComments: undefined,
+  extra: undefined,
+  callee: Node {
+    type: 'Identifier',
+    start: 101,
+    end: 112,
+    loc: SourceLocation {
+      start: [Position],
+      end: [Position],
+      filename: undefined,
+      identifierName: 'defineProps'
+    },
+    range: undefined,
+    leadingComments: undefined,
+    trailingComments: undefined,
+    innerComments: undefined,
+    extra: undefined,
+    name: 'defineProps'
+  },
+  arguments: [],
+  typeParameters: Node {
+    type: 'TSTypeParameterInstantiation',
+    start: 112,
+    end: 730,
+    loc: SourceLocation {
+      start: [Position],
+      end: [Position],
+      filename: undefined,
+      identifierName: undefined
+    },
+    range: undefined,
+    leadingComments: undefined,
+    trailingComments: undefined,
+    innerComments: undefined,
+    extra: undefined,
+    params: [ [Node] ]
+  }
+}
+</code></pre>
+<p>熟悉 babel 的哥们应该一眼能看出这是 babel 的 AST(抽象语法树).</p>
+<blockquote>
+<p>抽象语法树可以简单理解为分析源代码产生的相关信息<br>
+我们继续找, 看看是哪里提供了这个 node.<br>
+在 552 行, 我们可以找到 node 是 scriptSetupAst 的遍历子节点</p>
+</blockquote>
+<pre><code class="language-typescript">// line 552
+for (const node of scriptSetupAst)
+</code></pre>
+<p>而 <code>scriptSetupAst</code> 是调用了 parse 函数, 传入了<code>&lt;script setup&gt;</code>标签内的内容</p>
+<pre><code class="language-typescript">// parse &lt;script setup&gt; and  walk over top level statements
+const scriptSetupAst = parse(
+  scriptSetup.content,
+  {
+    plugins: [
+      ...plugins,
+    ],
+    sourceType: 'module'
+  },
+  startOffset
+)
+</code></pre>
+<p>继续寻找 parse 函数的定义, 在 209 行.<br>
+parse 函数调用了_parse 函数, 而 _parse 函数是<code>@babel/parser</code>包中 parse 函数的别名, 该函数返回的就是 Babel AST 格式的 AST, 证实了之前的猜想</p>
+<pre><code class="language-typescript">function parse(
+  input: string,
+  options: ParserOptions,
+  offset: number
+): Statement[] {
+  try {
+    return _parse(input, options).program.body
+  } catch (e) {
+    ...
+  }
+}
+</code></pre>
+<p>到这里, 「向前看」的工作已经完成, 大体流程为</p>
+<pre><code class="language-mermaid">flowchart
+    A(script setup 内容) --&gt;|babel parse| B(scriptSetupAst)
+    B --&gt;|for...of|C(TSTypeLiteral AST)
+</code></pre>
+<h2>向后看: propsTypeDecl 有什么用, 怎么处理</h2>
+<p>processDefineProps 的作用是对 propsTypeDecl 赋值, 那么赋值后对 propsTypeDecl 进行了哪些操作就是生成运行时 props 定义的关键.<br>
+按照惯例, 首先打印 propsTypeDecl</p>
+<pre><code class="language-typescript">propsTypeDecl:  Node {
+  type: 'TSTypeLiteral',
+  start: 113,
+  end: 729,
+  loc: SourceLocation {
+    start: Position { line: 7, column: 18 },
+    end: Position { line: 30, column: 7 },
+    filename: undefined,
+    identifierName: undefined
+  },
+  range: undefined,
+  leadingComments: undefined,
+  trailingComments: undefined,
+  innerComments: undefined,
+  extra: undefined,
+  members: [
+    Node {
+      type: 'TSPropertySignature',
+      start: 123,
+      end: 137,
+      loc: [SourceLocation],
+      range: undefined,
+      leadingComments: undefined,
+      trailingComments: undefined,
+      innerComments: undefined,
+      extra: undefined,
+      key: [Node],
+      computed: false,
+      typeAnnotation: [Node]
+    },
+    Node {
+      type: 'TSPropertySignature',
+      start: 146,
+      end: 160,
+      loc: [SourceLocation],
+      range: undefined,
+      leadingComments: undefined,
+      trailingComments: undefined,
+      innerComments: undefined,
+      extra: undefined,
+      key: [Node],
+      computed: false,
+      typeAnnotation: [Node]
+    },
+    Node {
+      type: 'TSPropertySignature',
+      start: 169,
+      end: 185,
+      loc: [SourceLocation],
+      range: undefined,
+      leadingComments: undefined,
+      trailingComments: undefined,
+      innerComments: undefined,
+      extra: undefined,
+      key: [Node],
+      computed: false,
+      typeAnnotation: [Node]
+    },
+    ...
+  ]
+}
+</code></pre>
+<p>可以看到, propsTypeDecl 就是 defineProps 类型声明的 AST. 主要内容是<code>members</code>字段, 每一个Node对应着一个 props 元素声明</p>
+<p>接下来我们找哪里使用了这个<code>propsTypeDecl</code></p>
+<p>propsTypeDecl 有两处引用</p>
+<h3>生成运行时props(重点)</h3>
+<pre><code class="language-typescript">// 4. extract runtime props/emits code from setup context type
+if (propsTypeDecl) {
+  extractRuntimeProps(propsTypeDecl, typeDeclaredProps, declaredTypes)
+}
+</code></pre>
+<p>参数除了 propsTypeDecl 之外, 还有</p>
+<ul>
+<li>typeDeclaredProps: 类型定义为<code>Record&lt;string, string[]&gt;</code>, 默认为{}的变量</li>
+<li>declaredTypes: 类型<code>Record&lt;string, string[]&gt;</code>, 默认{}的变量</li>
+</ul>
+<p>接下来看看这个函数都做了啥操作</p>
+<pre><code class="language-typescript">function extractRuntimeProps(
+  node: TSTypeLiteral,
+  props: Record&lt;string, PropTypeData&gt;,
+  declaredTypes: Record&lt;string, string[]&gt;
+) {
+  // members 即 literal type 的AST数组
+  for (const m of node.members) {
+    // 判断是否为 literal type
+    if (m.type === 'TSPropertySignature' &amp;&amp; m.key.type === 'Identifier') {
+      // 为 typeDeclaredProps 添加字段
+      props[m.key.name] = {
+        key: m.key.name,
+        required: !m.optional,
+        type:
+          // dev 下生成 type 字段, 生产环境不需要类型信息, 直接赋值 null
+          __DEV__ &amp;&amp; m.typeAnnotation
+            ? inferRuntimeType(m.typeAnnotation.typeAnnotation, declaredTypes)
+            : [`null`]
+      }
+    }
+  }
+}
+</code></pre>
+<p>该函数的作用就是根据 AST 的信息生成运行时的 props 声明, 并赋值给第二个参数<code>typeDeclaredProps</code>, 这个参数最终就是编译完成的 Props.<br>
+这里还调用了<code>inferRuntimeType</code>方法, 方法主体就是 switch 语句, 根据不同的<code>node.type</code>字段返回不同的运行时类型声明<br>
+截取其中一小段:</p>
+<pre><code class="language-typescript">switch (node.type) {
+  case 'TSStringKeyword':
+    return ['String']
+  case 'TSNumberKeyword':
+    return ['Number']
+</code></pre>
+<h3>生成 __props 字段</h3>
+<p>propsTypeDecl 另一处引用是用来生成<code>defineProps</code>方法中的__props字段:</p>
+<pre><code class="language-typescript">// 9. finalize setup() argument signature
+let args = `__props`
+if (propsTypeDecl) {
+  args += `: ${scriptSetup.content.slice(
+    propsTypeDecl.start!,
+    propsTypeDecl.end!
+  )}`
+}
+// inject user assignment of props
+// we use a default __props so that template expressions referencing props
+// can use it directly
+if (propsIdentifier) {
+  s.prependRight(startOffset, `\nconst ${propsIdentifier} = __props`)
+}
+if (emitIdentifier) {
+  args +=
+    emitIdentifier === `emit` ? `, { emit }` : `, { emit: ${emitIdentifier} }`
+  if (emitTypeDecl) {
+    args += `: {
+      emit: (${scriptSetup.content.slice(
+        emitTypeDecl.start!,
+        emitTypeDecl.end!
+      )}),
+      slots: any,
+      attrs: any
+    }`
+  }
+}
+</code></pre>
+<h2>总结</h2>
+<p>到这里我们分析完了整个的流程, 如下:</p>
+<pre><code class="language-mermaid">flowchart
+    A(script setup 内容) --&gt;|babel parse| B(scriptSetupAst)
+    B --&gt;|for...of|C(TSTypeLiteral AST)
+    C --&gt;|extractRuntimeProps|D(runtime Props)
+    C --&gt;|&quot;finalize setup() argument signature&quot;|E(defineComponent: __props)
+</code></pre>
+]]></content>
+        <author>
+            <name>Ray-D-Song</name>
+            <email>songraysmail@gmail.com</email>
+            <uri>https://ray-d-song.com</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Vue 使用 Vitest 进行单元测试]]></title>
         <id>https://ray-d-song.com/post/vitest-unit-test</id>
@@ -67,7 +394,7 @@ describe('phone', () =&gt; {
 })
 </code></pre>
 <p>输入命令<code>npm run test:unit</code>, 不出意外你会看到以下内容, 表明测试通过:<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312071947299.png" alt="test result"></p>
+<img src="https://r2.ray-d-song.com/202312071947299.png" alt="test result"></p>
 <p>编写测试的代码文件通常放置在<code>__test__</code>文件夹中, 命名为<code>xxx.test.ts</code>或<code>xxx.spec.ts</code>, Vitest 会自动运行所有此类命名的文件.<br>
 编写测试的基础是<code>describe、test、expect</code>关键字.<br>
 <code>describe</code> 用于定义一个测试<code>套件</code>, 套件类似于 js 的模块, 用于将多个 test 封装到一起, 搭配<code>skip、only</code>等 api 可以实现选择性测试等功能.<br>
@@ -202,7 +529,7 @@ describe('bin scaffold module', () =&gt; {
 
 })
 </code></pre>
-<p><img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312121120257.png" alt="result"></p>
+<p><img src="https://r2.ray-d-song.com/202312121120257.png" alt="result"></p>
 <h2>自定义 Vue 指令</h2>
 <p>自定义一个 v-debounce, 用于给按钮增加防抖效果</p>
 <pre><code class="language-ts">import _ from 'lodash'
@@ -427,7 +754,7 @@ afterAll(() =&gt; server.close())
 afterEach(() =&gt; server.resetHandlers())
 </code></pre>
 <p>开启测试, 会显示测试已通过.<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312141529162.png" alt="unit test pass"><br>
+<img src="https://r2.ray-d-song.com/202312141529162.png" alt="unit test pass"><br>
 请注意, 因为 msw 的作用是拦截请求而不是开启模拟服务器, 因此直接本地调用并不起作用.</p>
 <h1>异步测试</h1>
 <h1>优化测试过程</h1>
@@ -461,7 +788,7 @@ if(import.meta.vitest) {
 })
 </code></pre>
 <p>可以看到新运行的用例增加了一个非<code>test.ts</code>结尾的文件.<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312141609782.png" alt="in source test"><br>
+<img src="https://r2.ray-d-song.com/202312141609782.png" alt="in source test"><br>
 这样做的缺点是会造成打包后的代码体积膨胀, 但我们可以做一些处理让代码块作为不会被执行的区块被 tree-shake 掉.</p>
 <pre><code class="language-ts">/** vite.config.ts */
 export default defineConfig({
@@ -501,9 +828,9 @@ test('test mock Pick', () =&gt; {
 运行<code>pnpm run test:type</code>运行测试</p>
 <h2>可视化</h2>
 <p>Vitest 提供了 UI 界面进行交互, 运行<code>pnpm install @vitest/ui</code>安装, <code>pnpm run test:unit --ui</code> 启动<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312141744611.png" alt="ui"><br>
+<img src="https://r2.ray-d-song.com/202312141744611.png" alt="ui"><br>
 里面涵盖了几乎所有的操作, 还可以查看 console、源码和依赖图.<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312141745142.png" alt="Graph"></p>
+<img src="https://r2.ray-d-song.com/202312141745142.png" alt="Graph"></p>
 <h2>代码覆盖率</h2>
 <p>Vitest 通过 V8 提供代码覆盖率检查, 运行<code>pnpm install @vitest/coverage-v8</code>安装<br>
 在 vitest.config 中配置覆盖率选项</p>
@@ -517,7 +844,7 @@ test('test mock Pick', () =&gt; {
 })
 </code></pre>
 <p>这样就可以在 ui 界面上看到代码覆盖率结果了<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312141752020.png" alt="coverage ui"></p>
+<img src="https://r2.ray-d-song.com/202312141752020.png" alt="coverage ui"></p>
 ]]></content>
         <author>
             <name>Ray-D-Song</name>
@@ -775,12 +1102,12 @@ describe('Event Tracking', () =&gt; {
 <pre><code class="language-bash">npx wrangler d1 execute event-tracking-db --command=&quot;SELECT * FROM view_tracking&quot;
 </code></pre>
 <p>不出意外会出现这玩意<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312151552033.png" alt="result image"><br>
+<img src="https://r2.ray-d-song.com/202312151552033.png" alt="result image"><br>
 最后发布你的 worker</p>
 <pre><code class="language-bash">npx wrangler deploy
 </code></pre>
 <p>成功提示<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312151618252.png" alt="success"></p>
+<img src="https://r2.ray-d-song.com/202312151618252.png" alt="success"></p>
 <blockquote>
 <p>本博客为服务端渲染, 客户端不会直接调用 worker 接口. 如果你的 app 是 spa, 请记得添加一些防刷操作和入参判断拦截.</p>
 </blockquote>
@@ -1055,28 +1382,28 @@ Coroutine 作为发起者的「子程序」, 不存在独立的生命周期.</li
 <h1>并发</h1>
 <p>假设有一个处理器, 因为只有一个核心, 所以同时他只能运行一个进程, 又因为一个进程上同一时间只能运行一个线程(task). 所以你可以认为, 同一时间, 这颗处理器只能处理一个任务.</p>
 <p>操作系统会将<code>cpu 使用时间</code>这一资源进行切分, 这就是<code>时间分片</code>. 划分好的资源会按照调度算法分配给各个线程去使用. 进程内线程切换大概就是下面这种感觉:<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202309091531790.png" alt="线程调度"></p>
+<img src="https://r2.ray-d-song.com/202309091531790.png" alt="线程调度"></p>
 <p>因为现代计算机性能足够强劲, 所以使用者体感上是 task_1、2、3 在同时运行, 这就是并发.</p>
 <p>我并不想用<code>「多个任务同时发生」</code>这种模糊的表达, 在我看来<code>「并发」</code>之所以被称为<code>「并发」</code>单纯是翻译后中文表达的问题.<br>
 <code>无论如何, 同时确实只有一个任务在进行</code></p>
 <h1>并行</h1>
 <p>并行就要好理解的多, 你有一个多核心处理器, 例如拥有两个核心的老古董E6600. 因为有两个核心, 同时能运行两个进程, 每个进程可以运行一个线程. 因此, 你的电脑就能真正的在同一时间运行两个任务.<br>
 大概就是下面这种感觉:<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202309091547730.png" alt="并行"></p>
+<img src="https://r2.ray-d-song.com/202309091547730.png" alt="并行"></p>
 <h1>程序设计</h1>
 <p>之前刷知乎时, 看到这样一种说法:<code>「你的程序首先必须支持并发, 才能支持并行」</code><br>
 因为并发不仅是对程序执行状态的一种描述, 也是一种程序设计的方法论:<br>
 设计并发程序的条件就是<code>「程序的执行不依赖先后顺序、不依赖精确时序」</code>.<br>
 而一段不依赖先后顺序、不依赖精确时序的程序, 自然可以拆分成多段, 在多个线程上运行. 这多个线程又可以运行在不同的进程之上, 进而实现<code>并行</code>.</p>
 <p>首先我们来看看最常见的 web 应用场景, 从接收到用户请求到返回, 需要这些步骤:<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202309092334861.png" alt="web app"><br>
+<img src="https://r2.ray-d-song.com/202309092334861.png" alt="web app"><br>
 其中<code>DB operation</code>占据了最大的空间, 因为数据库操作确实是最耗时的操作.</p>
 <h1>多线程并发</h1>
 <p>我们来假设一种极端的情况, 如果一直只有一个线程在运行, 那么运行过程就会变成这样:<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202309092339287.png" alt="单线程"><br>
+<img src="https://r2.ray-d-song.com/202309092339287.png" alt="单线程"><br>
 如果是这样的话, 我想我们这台单核的机器没几个用户就 burn out 了.<br>
 应对这种情况, 最简单的思路就是多开几个线程, 虽然我们只有一个进程, 但当第一个线程卡在数据库操作时, 可以将控制权转移到其他线程进行操作.<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202309092351360.png" alt="多线程"></p>
+<img src="https://r2.ray-d-song.com/202309092351360.png" alt="多线程"></p>
 <h1>协程</h1>
 <p>多线程并发, 一切看起来都很美好, 但有两个问题, 一个是计算机能启动的线程数量是有限的, 还有就是线程的切换有着客观的成本.<br>
 那么如果我们可以自己在程序中<code>模拟线程</code>, 切换的不再是线程, 而是执行的程序方法. 岂不是可以用极低的成本去并发?<br>
@@ -1097,7 +1424,7 @@ Coroutine 作为发起者的「子程序」, 不存在独立的生命周期.</li
 </code></pre>
 <p>当程序执行到<code>await</code>标识的数据库操作时, 就会在当前方法内形成阻塞, 等待数据库的返回结果. 但对于调用 App() 的方法来说, 程序则会继续向下执行(处理其他的请求).</p>
 <p>整个过程的简略图大概如下:<br>
-<img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202309101809693.png" alt="async"></p>
+<img src="https://r2.ray-d-song.com/202309101809693.png" alt="async"></p>
 <p>关于协程更具体的介绍, 可以看我的这篇文章<a href="https://ray-d-song.com/post/1692667782462">协程(Coroutine)和纤程(Fiber)</a></p>
 <p>实际上这种<code>单线程+协程</code>并发模型, 就是 Node.js 的并发模型.<br>
 这几年协程的火爆, jdk21、php8 都支持了协程方案. 足以提现这种模式的优势.</p>

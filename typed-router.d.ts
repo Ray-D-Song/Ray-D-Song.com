@@ -45,6 +45,10 @@ declare module 'vue-router/auto/routes' {
     '/post/single-thread-concurrency': RouteRecordInfo<'/post/single-thread-concurrency', '/post/single-thread-concurrency', Record<never, never>, Record<never, never>>,
     '/post/value-of-tailwind': RouteRecordInfo<'/post/value-of-tailwind', '/post/value-of-tailwind', Record<never, never>, Record<never, never>>,
     '/post/vitest-unit-test': RouteRecordInfo<'/post/vitest-unit-test', '/post/vitest-unit-test', Record<never, never>, Record<never, never>>,
+    '/post/vue-compiler-macro-defineprops': RouteRecordInfo<'/post/vue-compiler-macro-defineprops', '/post/vue-compiler-macro-defineprops', Record<never, never>, Record<never, never>>,
+    '/temp/javascript-class': RouteRecordInfo<'/temp/javascript-class', '/temp/javascript-class', Record<never, never>, Record<never, never>>,
+    '/temp/typescript-extends': RouteRecordInfo<'/temp/typescript-extends', '/temp/typescript-extends', Record<never, never>, Record<never, never>>,
+    '/temp/vite-plugin-scoped-style': RouteRecordInfo<'/temp/vite-plugin-scoped-style', '/temp/vite-plugin-scoped-style', Record<never, never>, Record<never, never>>,
   }
 }
 

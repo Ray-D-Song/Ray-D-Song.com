@@ -2,6 +2,7 @@
 title: 'cloudflare worker/D1 初探'
 intro: '最近想给博客加个访问量展示, 因为网站本身套了一层 cf, 自然想到用 cf 的 serverless 方案, 也就是 worker.'
 time: '2023-11-18'
+tag: 'Serverless'
 ---
 # 创建项目
 如果是第一次使用 worker 服务, 需要登录一下
@@ -266,12 +267,12 @@ npx wrangler d1 execute event-tracking-db --file=./sql/schema.sql
 npx wrangler d1 execute event-tracking-db --command="SELECT * FROM view_tracking"
 ```
 不出意外会出现这玩意
-![result image](https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312151552033.png)
+![result image](https://r2.ray-d-song.com/202312151552033.png)
 最后发布你的 worker
 ```bash
 npx wrangler deploy
 ```
 成功提示
-![success](https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312151618252.png)
+![success](https://r2.ray-d-song.com/202312151618252.png)
 
 > 本博客为服务端渲染, 客户端不会直接调用 worker 接口. 如果你的 app 是 spa, 请记得添加一些防刷操作和入参判断拦截.

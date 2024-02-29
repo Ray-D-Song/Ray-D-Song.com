@@ -4,11 +4,12 @@ import { _ as _imports_0 } from "./copy-Z7yAKeMK.js";
 const title = "cloudflare worker/D1 初探";
 const intro = "最近想给博客加个访问量展示, 因为网站本身套了一层 cf, 自然想到用 cf 的 serverless 方案, 也就是 worker.";
 const time = "2023-11-18";
+const tag = "Serverless";
 const _sfc_main = {
   __name: "cloudflare-d1",
   __ssrInlineRender: true,
   setup(__props, { expose: __expose }) {
-    const frontmatter = { "title": "cloudflare worker/D1 初探", "intro": "最近想给博客加个访问量展示, 因为网站本身套了一层 cf, 自然想到用 cf 的 serverless 方案, 也就是 worker.", "time": "2023-11-18" };
+    const frontmatter = { "title": "cloudflare worker/D1 初探", "intro": "最近想给博客加个访问量展示, 因为网站本身套了一层 cf, 自然想到用 cf 的 serverless 方案, 也就是 worker.", "time": "2023-11-18", "tag": "Serverless" };
     __expose({ frontmatter });
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<div${ssrRenderAttrs(mergeProps({ class: "markdown-body" }, _attrs))}><h1>创建项目</h1><p>如果是第一次使用 worker 服务, 需要登录一下</p><pre class="shiki shiki-themes rose-pine-dawn tokyo-night" style="${ssrRenderStyle({ "background-color": "#faf4ed", "--shiki-dark-bg": "#1a1b26", "color": "#575279", "--shiki-dark": "#a9b1d6" })}" tabindex="0"><div class="copy-container"><div class="lang-symbol">bash</div><img${ssrRenderAttr("src", _imports_0)} class="copy-icon" data-code="npx wrangler login
@@ -407,9 +408,9 @@ describe(&#39;Event Tracking&#39;, () =&gt; {
 "></div><code><span class="line"><span style="${ssrRenderStyle({ "color": "#D7827E", "--shiki-dark": "#C0CAF5" })}">npx</span><span style="${ssrRenderStyle({ "color": "#EA9D34", "--shiki-dark": "#9ECE6A" })}"> wrangler d1 execute event-tracking-db --file=./sql/schema.sql </span></span>
 <span class="line"></span></code></pre><p>验证是否成功</p><pre class="shiki shiki-themes rose-pine-dawn tokyo-night" style="${ssrRenderStyle({ "background-color": "#faf4ed", "--shiki-dark-bg": "#1a1b26", "color": "#575279", "--shiki-dark": "#a9b1d6" })}" tabindex="0"><div class="copy-container"><div class="lang-symbol">bash</div><img${ssrRenderAttr("src", _imports_0)} class="copy-icon" data-code="npx wrangler d1 execute event-tracking-db --command=&quot;SELECT * FROM view_tracking&quot;
 "></div><code><span class="line"><span style="${ssrRenderStyle({ "color": "#D7827E", "--shiki-dark": "#C0CAF5" })}">npx</span><span style="${ssrRenderStyle({ "color": "#EA9D34", "--shiki-dark": "#9ECE6A" })}"> wrangler d1 execute event-tracking-db --command=</span><span style="${ssrRenderStyle({ "color": "#EA9D34", "--shiki-dark": "#89DDFF" })}">&quot;</span><span style="${ssrRenderStyle({ "color": "#EA9D34", "--shiki-dark": "#9ECE6A" })}">SELECT * FROM view_tracking</span><span style="${ssrRenderStyle({ "color": "#EA9D34", "--shiki-dark": "#89DDFF" })}">&quot;</span></span>
-<span class="line"></span></code></pre><p>不出意外会出现这玩意 <img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312151552033.png" alt="result image"> 最后发布你的 worker</p><pre class="shiki shiki-themes rose-pine-dawn tokyo-night" style="${ssrRenderStyle({ "background-color": "#faf4ed", "--shiki-dark-bg": "#1a1b26", "color": "#575279", "--shiki-dark": "#a9b1d6" })}" tabindex="0"><div class="copy-container"><div class="lang-symbol">bash</div><img${ssrRenderAttr("src", _imports_0)} class="copy-icon" data-code="npx wrangler deploy
+<span class="line"></span></code></pre><p>不出意外会出现这玩意 <img src="https://r2.ray-d-song.com/202312151552033.png" alt="result image"> 最后发布你的 worker</p><pre class="shiki shiki-themes rose-pine-dawn tokyo-night" style="${ssrRenderStyle({ "background-color": "#faf4ed", "--shiki-dark-bg": "#1a1b26", "color": "#575279", "--shiki-dark": "#a9b1d6" })}" tabindex="0"><div class="copy-container"><div class="lang-symbol">bash</div><img${ssrRenderAttr("src", _imports_0)} class="copy-icon" data-code="npx wrangler deploy
 "></div><code><span class="line"><span style="${ssrRenderStyle({ "color": "#D7827E", "--shiki-dark": "#C0CAF5" })}">npx</span><span style="${ssrRenderStyle({ "color": "#EA9D34", "--shiki-dark": "#9ECE6A" })}"> wrangler deploy</span></span>
-<span class="line"></span></code></pre><p>成功提示 <img src="https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312151618252.png" alt="success"></p><blockquote><p>本博客为服务端渲染, 客户端不会直接调用 worker 接口. 如果你的 app 是 spa, 请记得添加一些防刷操作和入参判断拦截.</p></blockquote></div>`);
+<span class="line"></span></code></pre><p>成功提示 <img src="https://r2.ray-d-song.com/202312151618252.png" alt="success"></p><blockquote><p>本博客为服务端渲染, 客户端不会直接调用 worker 接口. 如果你的 app 是 spa, 请记得添加一些防刷操作和入参判断拦截.</p></blockquote></div>`);
     };
   }
 };
@@ -422,6 +423,7 @@ _sfc_main.setup = (props, ctx) => {
 export {
   _sfc_main as default,
   intro,
+  tag,
   time,
   title
 };

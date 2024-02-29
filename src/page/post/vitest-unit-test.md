@@ -2,6 +2,7 @@
 title: 'Vue 使用 Vitest 进行单元测试'
 intro: '笔者过去并没有写过前端单测, 只在例如 Go 这样社区大力推崇 TDD 的语言中实践过, 最近遇到很多前端通过人肉测试难以覆盖的场景, 因此尝试 vitest.'
 time: '2023-12-18'
+tag: 'Test'
 ---
 
 # 单元测试的定义
@@ -52,7 +53,7 @@ describe('phone', () => {
 })
 ```
 输入命令`npm run test:unit`, 不出意外你会看到以下内容, 表明测试通过:
-![test result](https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312071947299.png)
+![test result](https://r2.ray-d-song.com/202312071947299.png)
 
 编写测试的代码文件通常放置在`__test__`文件夹中, 命名为`xxx.test.ts`或`xxx.spec.ts`, Vitest 会自动运行所有此类命名的文件.  
 编写测试的基础是`describe、test、expect`关键字.  
@@ -195,7 +196,7 @@ describe('bin scaffold module', () => {
 
 })
 ```
-![result](https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312121120257.png)
+![result](https://r2.ray-d-song.com/202312121120257.png)
 
 ## 自定义 Vue 指令
 自定义一个 v-debounce, 用于给按钮增加防抖效果
@@ -380,7 +381,7 @@ afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 ``` 
 开启测试, 会显示测试已通过.  
-![unit test pass](https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312141529162.png)
+![unit test pass](https://r2.ray-d-song.com/202312141529162.png)
 请注意, 因为 msw 的作用是拦截请求而不是开启模拟服务器, 因此直接本地调用并不起作用.
 # 异步测试
 
@@ -417,7 +418,7 @@ export default defineConfig({
 })
 ```
 可以看到新运行的用例增加了一个非`test.ts`结尾的文件.  
-![in source test](https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312141609782.png)
+![in source test](https://r2.ray-d-song.com/202312141609782.png)
 这样做的缺点是会造成打包后的代码体积膨胀, 但我们可以做一些处理让代码块作为不会被执行的区块被 tree-shake 掉.
 ```ts
 /** vite.config.ts */
@@ -459,9 +460,9 @@ test('test mock Pick', () => {
 运行`pnpm run test:type`运行测试
 ## 可视化
 Vitest 提供了 UI 界面进行交互, 运行`pnpm install @vitest/ui`安装, `pnpm run test:unit --ui` 启动
-![ui](https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312141744611.png)
+![ui](https://r2.ray-d-song.com/202312141744611.png)
 里面涵盖了几乎所有的操作, 还可以查看 console、源码和依赖图.
-![Graph](https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312141745142.png)
+![Graph](https://r2.ray-d-song.com/202312141745142.png)
 ## 代码覆盖率
 Vitest 通过 V8 提供代码覆盖率检查, 运行`pnpm install @vitest/coverage-v8`安装  
 在 vitest.config 中配置覆盖率选项
@@ -476,4 +477,4 @@ defineConfig({
 })
 ```
 这样就可以在 ui 界面上看到代码覆盖率结果了  
-![coverage ui](https://pic-base-1307984077.cos.ap-nanjing.myqcloud.com/202312141752020.png)
+![coverage ui](https://r2.ray-d-song.com/202312141752020.png)

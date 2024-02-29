@@ -9,7 +9,7 @@ const routes = [
   {
     path: "/",
     name: "/",
-    component: () => import("./assets/index-XmnDmYQc.js")
+    component: () => import("./assets/index-yJVuNqU-.js")
     /* no children */
   },
   {
@@ -20,57 +20,99 @@ const routes = [
       {
         path: "cloudflare-d1",
         name: "/post/cloudflare-d1",
-        component: () => import("./assets/cloudflare-d1-eK3my5y4.js"),
+        component: () => import("./assets/cloudflare-d1-qaDqSUbm.js"),
         /* no children */
         meta: {
           "title": "cloudflare worker/D1 初探",
           "intro": "最近想给博客加个访问量展示, 因为网站本身套了一层 cf, 自然想到用 cf 的 serverless 方案, 也就是 worker.",
-          "time": "2023-11-18"
+          "time": "2023-11-18",
+          "tag": "Serverless"
         }
       },
       {
         path: "coroutine-and-fiber",
         name: "/post/coroutine-and-fiber",
-        component: () => import("./assets/coroutine-and-fiber-2Dooq2vk.js"),
+        component: () => import("./assets/coroutine-and-fiber-3186ipgO.js"),
         /* no children */
         meta: {
           "title": "协程(Coroutine)和纤程(Fiber)",
           "intro": "最近在看 C++ 引入 Fiber 的[N4024文档: 区分纤程和协程](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4024.pdf), 文章给纤程和协程十分明确的区分. 但过去我看过的很多资料会将其混为一谈或者模糊二者的边界, 所以写了这篇博客来总结一下.",
-          "time": "2023-9-13"
+          "time": "2023-9-13",
+          "tag": "Concurrent"
         }
       },
       {
         path: "single-thread-concurrency",
         name: "/post/single-thread-concurrency",
-        component: () => import("./assets/single-thread-concurrency-VH0aK_Qb.js"),
+        component: () => import("./assets/single-thread-concurrency-46Bgyjfa.js"),
         /* no children */
         meta: {
           "title": "单线程并发",
           "intro": "小短文, 讨论单线程并发和 node.js 这样异步协程模型的优势",
-          "time": "2023-8-17"
+          "time": "2023-8-17",
+          "tag": "Concurrent"
         }
       },
       {
         path: "value-of-tailwind",
         name: "/post/value-of-tailwind",
-        component: () => import("./assets/value-of-tailwind-JvEjCJZO.js"),
+        component: () => import("./assets/value-of-tailwind-yvT9fTaB.js"),
         /* no children */
         meta: {
           "title": "TailwindCSS 的价值",
           "intro": "tailwind 一直饱受非议, 其中说的最多的大概就是「我为什么不直接写内联样式?」. 其实 tailwind 不仅是简写了样式名这么简单, 它是一系列便利的封装.",
-          "time": "2023-10-11"
+          "time": "2023-10-11",
+          "tag": "CSS"
         }
       },
       {
         path: "vitest-unit-test",
         name: "/post/vitest-unit-test",
-        component: () => import("./assets/vitest-unit-test-5grrE0-p.js"),
+        component: () => import("./assets/vitest-unit-test-vm_51mgE.js"),
         /* no children */
         meta: {
           "title": "Vue 使用 Vitest 进行单元测试",
           "intro": "笔者过去并没有写过前端单测, 只在例如 Go 这样社区大力推崇 TDD 的语言中实践过, 最近遇到很多前端通过人肉测试难以覆盖的场景, 因此尝试 vitest.",
-          "time": "2023-12-18"
+          "time": "2023-12-18",
+          "tag": "Test"
         }
+      },
+      {
+        path: "vue-compiler-macro-defineprops",
+        name: "/post/vue-compiler-macro-defineprops",
+        component: () => import("./assets/vue-compiler-macro-defineprops-wsJsiLaq.js"),
+        /* no children */
+        meta: {
+          "title": "Vue 宏编译: 以 defineProps 为例",
+          "intro": "分析 Vue defineProps 的 type-only 写法是如何根据类型信息生成运行时代码的",
+          "time": "2024-2-29",
+          "tag": "Vue"
+        }
+      }
+    ]
+  },
+  {
+    path: "/temp",
+    /* internal name: '/temp' */
+    /* no component */
+    children: [
+      {
+        path: "javascript-class",
+        name: "/temp/javascript-class",
+        component: () => import("./assets/javascript-class-j-BcEbLs.js")
+        /* no children */
+      },
+      {
+        path: "typescript-extends",
+        name: "/temp/typescript-extends",
+        component: () => import("./assets/typescript-extends-xUK5CAyc.js")
+        /* no children */
+      },
+      {
+        path: "vite-plugin-scoped-style",
+        name: "/temp/vite-plugin-scoped-style",
+        component: () => import("./assets/vite-plugin-scoped-style-EEvA73nb.js")
+        /* no children */
       }
     ]
   }

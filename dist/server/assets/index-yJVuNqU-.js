@@ -66,10 +66,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const { content, nav, pageCount, isLastPage, isFirstPage } = usePagination();
     useRouter();
     return (_ctx, _push, _parent, _attrs) => {
-      _push(`<div${ssrRenderAttrs(mergeProps({ class: "text-2xl mt-10 font-500" }, _attrs))}><!--[-->`);
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "text-2xl font-500" }, _attrs))}><!--[-->`);
       ssrRenderList(unref(content), (c, idx) => {
         var _a, _b;
-        _push(`<div class="my-7 hover:cursor-pointer flex flex-col"><span class="text-base font-700 mr-5 opacity-45">${ssrInterpolate((_a = c.meta) == null ? void 0 : _a.time)}</span><span>${ssrInterpolate((_b = c.meta) == null ? void 0 : _b.title)}</span></div>`);
+        _push(`<div class="my-7 hover:cursor-pointer flex flex-row items-end w-full"><span class="mr-2 w-full md:w-2/3">${ssrInterpolate((_a = c.meta) == null ? void 0 : _a.title)}</span><span class="text-base font-700 mr-5 opacity-45 hidden md:inline">${ssrInterpolate((_b = c.meta) == null ? void 0 : _b.time)}</span></div>`);
       });
       _push(`<!--]--></div>`);
     };

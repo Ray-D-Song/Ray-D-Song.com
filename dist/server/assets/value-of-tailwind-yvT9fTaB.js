@@ -4,11 +4,12 @@ import { _ as _imports_0 } from "./copy-Z7yAKeMK.js";
 const title = "TailwindCSS 的价值";
 const intro = "tailwind 一直饱受非议, 其中说的最多的大概就是「我为什么不直接写内联样式?」. 其实 tailwind 不仅是简写了样式名这么简单, 它是一系列便利的封装.";
 const time = "2023-10-11";
+const tag = "CSS";
 const _sfc_main = {
   __name: "value-of-tailwind",
   __ssrInlineRender: true,
   setup(__props, { expose: __expose }) {
-    const frontmatter = { "title": "TailwindCSS 的价值", "intro": "tailwind 一直饱受非议, 其中说的最多的大概就是「我为什么不直接写内联样式?」. 其实 tailwind 不仅是简写了样式名这么简单, 它是一系列便利的封装.", "time": "2023-10-11" };
+    const frontmatter = { "title": "TailwindCSS 的价值", "intro": "tailwind 一直饱受非议, 其中说的最多的大概就是「我为什么不直接写内联样式?」. 其实 tailwind 不仅是简写了样式名这么简单, 它是一系列便利的封装.", "time": "2023-10-11", "tag": "CSS" };
     __expose({ frontmatter });
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<div${ssrRenderAttrs(mergeProps({ class: "markdown-body" }, _attrs))}><p>tailwind 一直饱受非议, 其中说的最多的大概就是「我为什么不直接写内联样式?」. 其实 tailwind 不仅是简写了样式名这么简单, 它是一系列便利的封装.</p><h1>动画</h1><p>举个简单的例子, <code>animate-spin</code> 属性用于添加旋转动画, 常用在 loading 中. 如果你用传统的 css/sass 编写, 那你至少需要以下代码.</p><pre class="shiki shiki-themes rose-pine-dawn tokyo-night" style="${ssrRenderStyle({ "background-color": "#faf4ed", "--shiki-dark-bg": "#1a1b26", "color": "#575279", "--shiki-dark": "#a9b1d6" })}" tabindex="0"><div class="copy-container"><div class="lang-symbol">css</div><img${ssrRenderAttr("src", _imports_0)} class="copy-icon" data-code="animation: spin 1s linear infinite;
@@ -98,6 +99,7 @@ _sfc_main.setup = (props, ctx) => {
 export {
   _sfc_main as default,
   intro,
+  tag,
   time,
   title
 };
