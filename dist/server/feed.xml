@@ -4,7 +4,7 @@
         <title>Ray-D-Song</title>
         <link>https://ray-d-song.com/</link>
         <description>Ray's blog, Just for fun</description>
-        <lastBuildDate>Thu, 29 Feb 2024 09:01:18 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 29 Feb 2024 09:02:30 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -31,7 +31,7 @@
 <p>先看 defineProps&lt;{}&gt;() 会被编译成什么<br>
 在<code>packages/compiler-sfc/__tests__/compileScript.spec.ts</code>文件的451 行打个<code>console.log(content)</code>, 查看编译完成的内容<br>
 输入:</p>
-<pre><code class="language-vue">import { defineProps } from 'vue'
+<pre><code class="language-typescript">import { defineProps } from 'vue'
 
 
 defineProps&lt;{

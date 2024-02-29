@@ -1,4 +1,4 @@
-import{_ as s}from"./copy-D7w4FOSZ.js";import{b as n,o as i,h as l}from"./index-7d07Ouw1.js";const t={class:"markdown-body"},e=l('<h1>class extends</h1><p>TS 是 JS 的超集, 拥有 JS 的所有行为, ES6 标准的 class 可以使用 extends 关键字表示类继承.</p><pre class="shiki shiki-themes rose-pine-dawn tokyo-night" style="background-color:#faf4ed;--shiki-dark-bg:#1a1b26;color:#575279;--shiki-dark:#a9b1d6;" tabindex="0"><div class="copy-container"><div class="lang-symbol">typescript</div><img src="'+s+`" class="copy-icon" data-code="// B extends A 则 会拥有 A 的所有属性和方法
+import{_ as s}from"./copy-D7w4FOSZ.js";import{b as n,o as i,h as l}from"./index-B04Awqx4.js";const t={class:"markdown-body"},e=l('<h1>class extends</h1><p>TS 是 JS 的超集, 拥有 JS 的所有行为, ES6 标准的 class 可以使用 extends 关键字表示类继承.</p><pre class="shiki shiki-themes rose-pine-dawn tokyo-night" style="background-color:#faf4ed;--shiki-dark-bg:#1a1b26;color:#575279;--shiki-dark:#a9b1d6;" tabindex="0"><div class="copy-container"><div class="lang-symbol">typescript</div><img src="'+s+`" class="copy-icon" data-code="// B extends A 则 会拥有 A 的所有属性和方法
 class A {
   name: string
   constructor(name: string) { this.name = name }

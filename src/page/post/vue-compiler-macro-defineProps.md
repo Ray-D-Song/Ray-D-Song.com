@@ -21,7 +21,7 @@ Vue 的 script setup 编译器源码位于`packages/compiler-sfc/src/compileScri
 先看 defineProps<{}>() 会被编译成什么  
 在`packages/compiler-sfc/__tests__/compileScript.spec.ts`文件的451 行打个`console.log(content)`, 查看编译完成的内容  
 输入:  
-```vue
+```typescript
 import { defineProps } from 'vue'
 
 
