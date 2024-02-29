@@ -4,7 +4,7 @@
         <title>Ray-D-Song</title>
         <link>https://ray-d-song.com/</link>
         <description>Ray's blog, Just for fun</description>
-        <lastBuildDate>Thu, 29 Feb 2024 09:06:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 29 Feb 2024 09:27:48 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -1353,14 +1353,14 @@ Coroutine 作为发起者的「子程序」, 不存在独立的生命周期.</li
 <h1>并发</h1>
 <p>假设有一个处理器, 因为只有一个核心, 所以同时他只能运行一个进程, 又因为一个进程上同一时间只能运行一个线程(task). 所以你可以认为, 同一时间, 这颗处理器只能处理一个任务.</p>
 <p>操作系统会将<code>cpu 使用时间</code>这一资源进行切分, 这就是<code>时间分片</code>. 划分好的资源会按照调度算法分配给各个线程去使用. 进程内线程切换大概就是下面这种感觉:<br>
-<img src="https://r2.ray-d-song.com/202309091531790.png" alt="线程调度"></p>
+<img src="https://r2.ray-d-song.com/2024/02/1674c2a68a1f5732789d854fce7ce515.png" alt="线程调度"></p>
 <p>因为现代计算机性能足够强劲, 所以使用者体感上是 task_1、2、3 在同时运行, 这就是并发.</p>
 <p>我并不想用<code>「多个任务同时发生」</code>这种模糊的表达, 在我看来<code>「并发」</code>之所以被称为<code>「并发」</code>单纯是翻译后中文表达的问题.<br>
 <code>无论如何, 同时确实只有一个任务在进行</code></p>
 <h1>并行</h1>
 <p>并行就要好理解的多, 你有一个多核心处理器, 例如拥有两个核心的老古董E6600. 因为有两个核心, 同时能运行两个进程, 每个进程可以运行一个线程. 因此, 你的电脑就能真正的在同一时间运行两个任务.<br>
 大概就是下面这种感觉:<br>
-<img src="https://r2.ray-d-song.com/202309091547730.png" alt="并行"></p>
+<img src="https://r2.ray-d-song.com/2024/02/dca335668b68d1e7e0c5f0071e9ccc23.png" alt="并行"></p>
 <h1>程序设计</h1>
 <p>之前刷知乎时, 看到这样一种说法:<code>「你的程序首先必须支持并发, 才能支持并行」</code><br>
 因为并发不仅是对程序执行状态的一种描述, 也是一种程序设计的方法论:<br>

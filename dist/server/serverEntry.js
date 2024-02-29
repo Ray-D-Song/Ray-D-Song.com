@@ -44,7 +44,7 @@ const routes = [
       {
         path: "single-thread-concurrency",
         name: "/post/single-thread-concurrency",
-        component: () => import("./assets/single-thread-concurrency-46Bgyjfa.js"),
+        component: () => import("./assets/single-thread-concurrency-pMApsydX.js"),
         /* no children */
         meta: {
           "title": "单线程并发",
