@@ -1,7 +1,7 @@
 ---
 title: 'Vue 宏编译: 以 defineProps 为例'
 intro: '分析 Vue defineProps 的 type-only 写法是如何根据类型信息生成运行时代码的'
-time: '2024-2-29'
+time: '2024-02-29'
 tag: 'Vue'
 ---
 
@@ -21,7 +21,9 @@ Vue 的 script setup 编译器源码位于`packages/compiler-sfc/src/compileScri
 先看 defineProps<{}>() 会被编译成什么  
 在`packages/compiler-sfc/__tests__/compileScript.spec.ts`文件的451 行打个`console.log(content)`, 查看编译完成的内容  
 输入:  
-```typescript
+
+```vue
+<script setup lang="ts">
 import { defineProps } from 'vue'
 
 
@@ -32,7 +34,9 @@ defineProps<{
   object: object
   // ...
 }>()
+</script>
 ```
+
 输出:
 ```typescript
 import { defineComponent as _defineComponent } from 'vue'
@@ -140,6 +144,7 @@ Node {
 ```
 熟悉 babel 的哥们应该一眼能看出这是 babel 的 AST(抽象语法树).  
 > 抽象语法树可以简单理解为分析源代码产生的相关信息  
+
 我们继续找, 看看是哪里提供了这个 node.  
 在 552 行, 我们可以找到 node 是 scriptSetupAst 的遍历子节点  
 ```typescript

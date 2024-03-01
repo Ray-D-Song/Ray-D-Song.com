@@ -1,7 +1,7 @@
 ---
 title: '单线程并发'
 intro: '小短文, 讨论单线程并发和 node.js 这样异步协程模型的优势'
-time: '2023-8-17'
+time: '2023-08-17'
 tag: 'Concurrent'
 ---
 > 本文封面和思路来源于 Ruby China 2021 By 东仙队长的分享: [Ruby 高并发编程指北](https://www.bilibili.com/video/BV1h3411v7kq/?spm_id_from=333.999.0.0&vd_source=371668a779fa4a755fcbf62901a22d71)

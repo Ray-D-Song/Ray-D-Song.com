@@ -1,7 +1,7 @@
 ---
 title: '协程(Coroutine)和纤程(Fiber)'
 intro: '最近在看 C++ 引入 Fiber 的[N4024文档: 区分纤程和协程](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4024.pdf), 文章给纤程和协程十分明确的区分. 但过去我看过的很多资料会将其混为一谈或者模糊二者的边界, 所以写了这篇博客来总结一下.'
-time: '2023-9-13'
+time: '2023-09-13'
 tag: 'Concurrent'
 ---
 最近在看 C++ 引入 Fiber 的[N4024文档: 区分纤程和协程](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4024.pdf), 文章给纤程和协程十分明确的区分. 但过去我看过的很多资料会将其混为一谈或者模糊二者的边界, 所以写了这篇博客来总结一下.
