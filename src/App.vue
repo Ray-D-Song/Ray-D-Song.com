@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import Default from '@/layout/default.vue'
-import VConsole from 'vconsole'
-
-if(import.meta.env.DEV) {
-  const vConsole = new VConsole({ theme: 'dark' })
-}
 </script>
 
 <template>

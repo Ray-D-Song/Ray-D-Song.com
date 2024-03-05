@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ray-d-song.com/</id>
     <title>Ray-D-Song</title>
-    <updated>2024-02-29T09:27:48.544Z</updated>
+    <updated>2024-03-05T01:15:56.101Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
         <name>Ray-D-Song</name>
@@ -19,7 +19,7 @@
         <title type="html"><![CDATA[Vue 宏编译: 以 defineProps 为例]]></title>
         <id>https://ray-d-song.com/post/vue-compiler-macro-defineprops</id>
         <link href="https://ray-d-song.com/post/vue-compiler-macro-defineprops"/>
-        <updated>2024-02-28T16:00:00.000Z</updated>
+        <updated>2024-02-29T00:00:00.000Z</updated>
         <content type="html"><![CDATA[<p>Vue macro(宏) 随着<code>&lt;script setup&gt;</code>写法一同引入 Vue 生态, 进一步丰富了 Vue 在编译期的想象力.<br>
 本文主要分析 Vue defineProps 的 type-only 写法是如何根据类型信息生成运行时代码.</p>
 <p>我们先拉取 Vue 的源代码, 并切换到3.0.3版本, 这是最早引入 script setup 和 defineProps macro 的版本.</p>
@@ -32,7 +32,8 @@
 <p>先看 defineProps&lt;{}&gt;() 会被编译成什么<br>
 在<code>packages/compiler-sfc/__tests__/compileScript.spec.ts</code>文件的451 行打个<code>console.log(content)</code>, 查看编译完成的内容<br>
 输入:</p>
-<pre><code class="language-typescript">import { defineProps } from 'vue'
+<pre><code class="language-vue">&lt;script setup lang=&quot;ts&quot;&gt;
+import { defineProps } from 'vue'
 
 
 defineProps&lt;{
@@ -42,6 +43,7 @@ defineProps&lt;{
   object: object
   // ...
 }&gt;()
+&lt;/script&gt;
 </code></pre>
 <p>输出:</p>
 <pre><code class="language-typescript">import { defineComponent as _defineComponent } from 'vue'
@@ -145,10 +147,10 @@ return {  }
 </code></pre>
 <p>熟悉 babel 的哥们应该一眼能看出这是 babel 的 AST(抽象语法树).</p>
 <blockquote>
-<p>抽象语法树可以简单理解为分析源代码产生的相关信息<br>
-我们继续找, 看看是哪里提供了这个 node.<br>
-在 552 行, 我们可以找到 node 是 scriptSetupAst 的遍历子节点</p>
+<p>抽象语法树可以简单理解为分析源代码产生的相关信息</p>
 </blockquote>
+<p>我们继续找, 看看是哪里提供了这个 node.<br>
+在 552 行, 我们可以找到 node 是 scriptSetupAst 的遍历子节点</p>
 <pre><code class="language-typescript">// line 552
 for (const node of scriptSetupAst)
 </code></pre>
@@ -1198,7 +1200,7 @@ describe('Event Tracking', () =&gt; {
         <title type="html"><![CDATA[协程(Coroutine)和纤程(Fiber)]]></title>
         <id>https://ray-d-song.com/post/coroutine-and-fiber</id>
         <link href="https://ray-d-song.com/post/coroutine-and-fiber"/>
-        <updated>2023-09-12T16:00:00.000Z</updated>
+        <updated>2023-09-13T00:00:00.000Z</updated>
         <content type="html"><![CDATA[<p>最近在看 C++ 引入 Fiber 的<a href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4024.pdf">N4024文档: 区分纤程和协程</a>, 文章给纤程和协程十分明确的区分. 但过去我看过的很多资料会将其混为一谈或者模糊二者的边界, 所以写了这篇博客来总结一下.</p>
 <h1>纤程</h1>
 <p>线程是一种轻量级的线程, 本质是对线程时间进行切片处理, 调度也由用户进行. 最早是 Microsoft 为了解决 Unix 平台的引用程序移植到 Windows 上时出现的问题而发起的提案.<br>
@@ -1367,7 +1369,7 @@ Coroutine 作为发起者的「子程序」, 不存在独立的生命周期.</li
         <title type="html"><![CDATA[单线程并发]]></title>
         <id>https://ray-d-song.com/post/single-thread-concurrency</id>
         <link href="https://ray-d-song.com/post/single-thread-concurrency"/>
-        <updated>2023-08-16T16:00:00.000Z</updated>
+        <updated>2023-08-17T00:00:00.000Z</updated>
         <content type="html"><![CDATA[<blockquote>
 <p>本文封面和思路来源于 Ruby China 2021 By 东仙队长的分享: <a href="https://www.bilibili.com/video/BV1h3411v7kq/?spm_id_from=333.999.0.0&amp;vd_source=371668a779fa4a755fcbf62901a22d71">Ruby 高并发编程指北</a></p>
 </blockquote>

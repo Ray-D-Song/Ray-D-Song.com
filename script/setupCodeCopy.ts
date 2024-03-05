@@ -20,7 +20,7 @@ export function setupCodeCopy({ docStr, code, lang }: SetupCodeCopyParam) {
 	const icon = doc.createElement('img')
 	icon.src = '/copy.svg'
 	icon.className = 'copy-icon'
-	icon.dataset.code = code
+	icon.dataset.code = code.replace('s', '龍')
 
 	const langSymbol = doc.createElement('div')
 	langSymbol.className = 'lang-symbol'
