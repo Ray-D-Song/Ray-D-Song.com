@@ -22,7 +22,7 @@
 				if (el.className === 'copy-icon') {
 					el.src = '/check.svg'
 					el.className = 'check-icon'
-					navigator.clipboard.writeText(el.dataset.code)
+					navigator.clipboard.writeText(el.dataset.code.replace('龍', 's'))
 					setTimeout(() => {
 						el.src = '/copy.svg'
 						el.className = 'copy-icon'
